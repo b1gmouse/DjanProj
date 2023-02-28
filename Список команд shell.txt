@@ -1,0 +1,20 @@
+User.objects.create_user(username='')
+Author.objects.create(user='')
+Category.objects.create(name='')
+Post.objects.create(post= , category= , topic= ,text= )
+Post.objects.get(id= ).category.add(Category.objects.get(id= ))
+Comment.objects.create(com_to_post=Post.objects.get(id= ), com_to_user=Author.objects.get(id= ).user, text= )
+Comment.objects.get(id= ).like()
+Comment.objects.get(id= ).dislike()
+Comment.objects.get(id= ).rating
+Author.objects.get(id= ).update_rating()
+Post.objects.get(id= ).like()
+Post.objects.get(id= ).dislike()
+Post.objects.get(id= ).rating
+Author.objects.order_by('-rating_author')[:1]
+
+
+for i in Author.objects.order_by('-rating_author')[:1]:
+	i.rating_author
+	i.user.username
+	
