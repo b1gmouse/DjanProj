@@ -23,6 +23,9 @@ class Author(models.Model):
 class Category(models.Model):
     name = models.CharField(max_length=32, unique = True)
 
+    def __str__(self):
+        return self.name
+
 
 
 class Post(models.Model):
@@ -50,6 +53,11 @@ class Post(models.Model):
 
     def preview(self):
         return self.text[:124] + "..."
+
+    def __str__(self):
+        return f'{self.topic}: ' \
+               f'{self.text} ' \
+               f'({self.date_creation})'
 
 
 
