@@ -4,12 +4,12 @@ from django import template
 register = template.Library()
 
 CURRENCIES_SYMBOLS = {
-   'Игры': '*',
+   'в': '*',
 }
 
 
 @register.filter()
-def currency(value, code='Игры'):
+def currency(value, code='в'):
 
    postfix = CURRENCIES_SYMBOLS[code]
 

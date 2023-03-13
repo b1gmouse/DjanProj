@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.db.models import Sum
+from django.urls import reverse
+
 
 class Author(models.Model):
     login = models.CharField(max_length=20)
@@ -35,12 +37,12 @@ class Post(models.Model):
         (News, 'Новости'),
         (Article, 'Статьи')
     )
-    post = models.ForeignKey(Author, on_delete = models.CASCADE)
+    post = models.ForeignKey(Author, on_delete = models.CASCADE, null=True)
     choice = models.CharField(max_length=2, choices=variables, default=Article)
-    date_creation = models.DateTimeField(auto_now_add=True)
-    topic = models.CharField(max_length=32)
-    text = models.TextField()
-    rating = models.IntegerField(default=0)
+    date_creation = models.DateTimeField(auto_now_add=True, null=True)
+    topic = models.CharField(max_length=32, default='default')
+    text = models.TextField(null=True)
+    rating = models.IntegerField(default=0, null=True)
     category = models.ManyToManyField(Category, through='PostCategory')
 
     def like(self):
@@ -58,6 +60,8 @@ class Post(models.Model):
         return f'{self.topic}: ' \
                f'{self.text} ' \
                f'({self.date_creation})'
+    def get_absolute_url(self):
+        return reverse('new_detail', args=[str(self.id)])
 
 
 
