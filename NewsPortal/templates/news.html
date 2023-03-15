@@ -13,12 +13,19 @@ news
 
    <h1>Все новости</h1>
    <hr>
+    {% if perms.news.add_post %}
+    <a href="{% url 'post_create' %}">Добавить новость</a>
+    {% endif %}
    {% if news %}
        <table>
            <tr>
                <td>Название</td>
                <td>Текст</td>
                <td>Дата</td>
+
+                {% if perms.news.change_post or perms.news.delete_post %}
+                <td>Действия</td>
+                {% endif %}
            </tr>
 
            {% for post in news %}
@@ -26,6 +33,14 @@ news
                <td>{{ post.topic|currency }}</td>
                <td>{{ post.text|truncatewords:20 }}</td>
                <td>{{ post.date_creation|currency }}</td>
+               <td>
+                    {% if perms.news.change_post %}
+                    <a href="{% url 'post_update' pk=post.id %}">Изменить</a>
+                    {% endif %}
+                    {% if perms.news.delete_post %}
+                    <a href="{% url 'post_delete' post.id %}">Удалить</a>
+                    {% endif %}
+                </td>
            </tr>
            {% endfor %}
 
