@@ -1,0 +1,24 @@
+{% extends 'flatpages/default.html' %}
+
+
+{% block tittle %} Новости {% endblock %}
+
+{% block content %}
+
+{% if category.id %}
+<div class="subscribe">
+    <em>
+        Subscribe to
+        <strong>{{ category }}?</strong>
+    </em>
+
+    <a href="{% url 'news:subscribe' category.id %}" class="button
+       button-outline">
+        Subscribe
+    </a>
+</div>
+{% endif %}
+
+{% include 'posts.html' %}
+
+{% endblock content %}

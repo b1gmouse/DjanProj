@@ -1,0 +1,19 @@
+{% load custom_filters %}
+
+{% if posts %}
+{% for post in posts %}
+
+
+{% include 'details.html' %}
+<p>
+  {{ post.text }}
+</p>
+
+{% endfor %}
+
+{% else %}
+<h2> No posts yet </h2>
+{% endif %}
+<p></p>
+
+

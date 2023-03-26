@@ -23,8 +23,12 @@ class Author(models.Model):
         self.save()
 
 class Category(models.Model):
-    name = models.CharField(max_length=32, unique = True)
-
+    name = models.CharField(max_length=32, unique=True)
+    subscribers = models.ManyToManyField(User, blank=True)
+    def subscribe(self):
+        pass
+    def get_category(self):
+        return self.name
     def __str__(self):
         return self.name
 
@@ -61,9 +65,7 @@ class Post(models.Model):
                f'{self.text} ' \
                f'({self.date_creation})'
     def get_absolute_url(self):
-        return reverse('new_detail', args=[str(self.id)])
-
-
+        return reverse('news:new_detail', args=[str(self.id)])
 
 
 class PostCategory(models.Model):

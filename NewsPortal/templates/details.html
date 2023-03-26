@@ -1,0 +1,14 @@
+{% load custom_filters %}
+
+<h3>
+    {{ post.topic }}
+</h3>
+
+<p class="details">
+  By <span class="author">{{post.author}}</span>
+  on <span class="date">{{post.date_creation}}</span>
+  Category:
+  {% for c in post.category.values %}
+    <a href="{% url 'news:category' c.id %}" class="category">{{c.name}}</a>
+  {% endfor %}
+</p>

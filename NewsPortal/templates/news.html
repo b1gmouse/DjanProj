@@ -14,7 +14,7 @@ news
    <h1>Все новости</h1>
    <hr>
     {% if perms.news.add_post %}
-    <a href="{% url 'post_create' %}">Добавить новость</a>
+    <a href="{% url 'news:post_create' %}">Добавить новость</a>
     {% endif %}
    {% if news %}
        <table>
@@ -35,10 +35,10 @@ news
                <td>{{ post.date_creation|currency }}</td>
                <td>
                     {% if perms.news.change_post %}
-                    <a href="{% url 'post_update' pk=post.id %}">Изменить</a>
+                    <a href="{% url 'news:post_update' pk=post.id %}">Изменить</a>
                     {% endif %}
                     {% if perms.news.delete_post %}
-                    <a href="{% url 'post_delete' post.id %}">Удалить</a>
+                    <a href="{% url 'news:post_delete' post.id %}">Удалить</a>
                     {% endif %}
                 </td>
            </tr>
