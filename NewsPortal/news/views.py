@@ -1,5 +1,6 @@
 from datetime import datetime
 
+from django.http import HttpResponse
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 from django.urls import reverse_lazy, resolve
@@ -14,6 +15,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.views.decorators.csrf import csrf_protect
 from .models import Category
 from django.conf import settings
+
 
 DEFAULT_FROM_EMAIL = settings.DEFAULT_FROM_EMAIL
 
@@ -164,4 +166,5 @@ def subscribe_to_category(request, pk):
             print(e)
         return redirect('news:new_list')
     return redirect('news:new_list')
+
 

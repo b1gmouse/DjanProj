@@ -174,3 +174,11 @@ DEFAULT_FROM_EMAIL = "example@yandex.ru"
 if DEBUG:
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
+
+CELERY_BROKER_URL = 'redis://default:QMxeTvB7aLr7usH5nDGtu4jMu3g53yko@redis-17058.c114.us-east-1-4.ec2.cloud.redislabs.com:17058'
+CELERY_RESULT_BACKEND = 'redis://default:QMxeTvB7aLr7usH5nDGtu4jMu3g53yko@redis-17058.c114.us-east-1-4.ec2.cloud.redislabs.com:17058'
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TIMEZONE = 'Europe/Moscow'
+

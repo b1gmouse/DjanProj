@@ -11,7 +11,7 @@ from django.template.loader import render_to_string
 from django_apscheduler import util
 from django_apscheduler.jobstores import DjangoJobStore
 from django_apscheduler.models import DjangoJobExecution
-from news.tasks import new_post_subscription
+from news.task import new_post_subscription
 
 from news.models import Post, PostCategory
 
