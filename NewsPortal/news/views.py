@@ -15,6 +15,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.views.decorators.csrf import csrf_protect
 from .models import Category
 from django.conf import settings
+from django.core.cache import cache
 
 
 DEFAULT_FROM_EMAIL = settings.DEFAULT_FROM_EMAIL
@@ -39,9 +40,21 @@ class NewsList(ListView):
 
 
 class NewDetail(DetailView):
-    model = Post
+    #model = Post
+    #template_name = 'new.html'
+    #context_object_name = 'article'
     template_name = 'new.html'
-    context_object_name = 'article'
+    queryset = Post.objects.all()
+
+    def get_object(self, *args, **kwargs): # переопределяем метод получения объекта, как ни странно
+        obj = cache.get(f'product-{self.kwargs["pk"]}', None) # кэш очень похож на словарь, и метод get действует так же. Он забирает значение по ключу, если его нет, то забирает None.
+
+        # если объекта нет в кэше, то получаем его и записываем в кэш
+        if not obj:
+            obj = super().get_object(queryset=self.queryset)
+            cache.set(f'product-{self.kwargs["pk"]}', obj)
+
+        return obj
 
 
 class PostCreate(LoginRequiredMixin, CreateView):

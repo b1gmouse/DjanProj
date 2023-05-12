@@ -91,6 +91,108 @@ AUTHENTICATION_BACKENDS = [
 WSGI_APPLICATION = 'NewsPortal.wsgi.application'
 
 
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'standart': {
+            'format': '{asctime} - {levelname} - {message}',
+            'style': '{',
+        },
+        'for_info': {
+            'format': '{asctime} - {levelname} - {module} - {message}',
+            'style': '{',
+        },
+        'for_warning': {
+            'format': '{asctime} - {levelname} - {pathname} - {message}',
+            'style': '{',
+        },
+        'for_error': {
+            'format': '{asctime} - {levelname} - {pathname} / {exc_info} - {message}',
+            'style': '{'
+        },
+        'security': {
+            'format': '{asctime} - {levelname} - {module} - {message}',
+            'style': '{',
+        },
+    },
+    'filters': {
+        'require_debug_true': {
+            '()': 'django.utils.log.RequireDebugTrue',
+        },
+        'require_debug_false': {
+            '()': 'django.utils.log.RequireDebugFalse',
+        },
+
+    },
+    'handlers': {
+        'general': {
+            'level': 'INFO',
+            'class': 'logging.FileHandler',
+            'filters': ['require_debug_false'],
+            'filename': 'general.log',
+            'formatter': 'standart'
+        },
+        'errors': {
+            'level': 'ERROR',
+            'class': 'logging.FileHandler',
+            'filename': 'errors.log',
+            'formatter': 'for_error'
+        },
+        'console': {
+            'level': 'DEBUG',
+            'filters': ['require_debug_true'],
+            'class': 'logging.StreamHandler',
+            'formatter': 'standart',
+        },
+        'mail_admins': {
+            'level': 'ERROR',
+            'filters': ['require_debug_false'],
+            'class': 'django.utils.log.AdminEmailHandler',
+            'formatter': 'for_warning',
+        },
+        'security': {
+            'level': 'INFO',
+            'filters': ['require_debug_false'],
+            'class': 'logging.FileHandler',
+            'filename': 'security.log',
+            'formatter': 'for_warning',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console', 'general'],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
+        'django.request': {
+            'handlers': ['errors', 'mail_admins', 'general'],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
+        'django.server': {
+            'handlers': ['errors', 'mail_admins'],
+            'level': 'ERROR',
+            'propagate': True,
+        },
+        'django.template': {
+            'handlers': ['errors'],
+            'level': 'ERROR',
+            'propagate': True,
+        },
+        'django.db.backends': {
+            'handlers': ['errors'],
+            'level': 'ERROR',
+            'propagate': True,
+        },
+        'django.security.*': {
+            'handlers': ['security'],
+            'level': 'INFO',
+            'propagate': True,
+        },
+    },
+}
+
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
@@ -169,6 +271,11 @@ EMAIL_HOST_PASSWORD = "iliezvcovrxqizez"
 EMAIL_USE_TLS = False
 EMAIL_USE_SSL = True
 
+ADMINS = [
+    ('Igor', 'demonishka20001@gmail.com'),
+]
+SERVER_EMAIL = 'server.sendmails@gmail.com'
+
 DEFAULT_FROM_EMAIL = "example@yandex.ru"
 
 if DEBUG:
@@ -181,4 +288,12 @@ CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TIMEZONE = 'Europe/Moscow'
+
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
+        'LOCATION': os.path.join(BASE_DIR, 'cache_files'),
+    }
+}
 
